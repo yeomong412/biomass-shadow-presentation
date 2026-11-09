@@ -49,3 +49,10 @@
 .reference-group a{font-size:26px;line-height:1.3}
 .reference-group li span,.reference-detail{font-size:24px;line-height:1.35;color:var(--muted)}
 .reference-detail{grid-column:1/-1;margin:0;text-align:center}
+
+.question small{display:block;margin-top:8px;font-size:26px;line-height:1.4;color:var(--muted)}
+.supply-stages,.discussion-options{margin-top:32px}
+.compare:has(+.slide-question),.two:has(+.slide-question){flex:1;min-height:0}
+.compare+.slide-question,.two+.slide-question,.policy~.slide-question{margin-bottom:40px}
+.policy{padding-block:24px;margin-bottom:8px}
+.discussion-options .card{min-height:152px;padding:24px 32px;gap:8px;justify-content:center}
