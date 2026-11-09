@@ -19,3 +19,20 @@
 .slide:has(.mapframe) .title{font-size:56px}
 .slide:has(.mapframe) .content{margin-top:24px}
 @media print{.maptabs{display:none}.mapviews{display:flex;gap:16px}.mapview,.mapview[hidden]{display:block;flex:1;min-width:0}}
+
+/* Short speaking points: a consistent 8px spacing scale. */
+.bullet-list{display:flex;flex-direction:column;gap:16px;list-style:none;margin:24px 0 0;padding:0;max-width:1280px}
+.bullet-list li{position:relative;padding-left:32px;font-size:29px;line-height:1.38;font-weight:670;letter-spacing:-.025em}
+.bullet-list li::before{content:"-";position:absolute;left:0;top:0;color:var(--orange);font-weight:850}
+.bullet-list.inline{display:grid;grid-template-columns:1fr 1fr;column-gap:48px;row-gap:16px;margin-top:24px}
+.bullet-list.compact{gap:16px;margin:0}
+.bullet-list.compact li{font-size:25px;line-height:1.35;padding-left:24px;font-weight:620;color:var(--muted)}
+.bullet-list.panel-list{gap:24px;margin:8px 0 0}
+.bullet-list.panel-list li{font-size:29px;line-height:1.4}
+.panel.darkpanel .bullet-list li{color:#edf5ee}
+.panel.darkpanel .bullet-list li::before{color:#a8d6b5}
+.slide-question{font-size:30px;line-height:1.4;font-weight:800;color:var(--forest);background:#e1ece3;border-left:8px solid var(--forest);border-radius:0 16px 16px 0;padding:24px 32px;margin-top:32px;letter-spacing:-.035em}
+.metric-caption{font-size:26px!important;color:var(--muted)}
+.dark .bullet-list li{color:#e5f0e7}
+.dark .slide-question{background:#234b3c;color:#eaf4eb;border-color:#a8d6b5}
+@media print{.bullet-list,.slide-question{break-inside:avoid}}
