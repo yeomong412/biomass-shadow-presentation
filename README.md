@@ -13,18 +13,20 @@
 
 ## 이미지
 
-현재 저장소에 지도 이미지가 없기 때문에 누락 이미지용 대체 화면을 제공합니다. 실제 PNG를 `assets/maps/` 폴더에 넣고 파일명을 아래와 일치시키면 자동으로 표시됩니다.
+기존 Python 작업의 3840×2160 PNG 8종을 원본 그대로 연결했습니다.
 
-- slide10_gorontalo_overview.png
-- slide11_global_trade.png
-- slide12_supply_chain.png
-- slide13_forest_terrain.png
-- slide15_satellite_2020.png
-- slide15_satellite_2024.png
-- slide16_forest_loss.png
-- slide18_shadow_atlas.png
+| 슬라이드 | 파일 | 표시 |
+|---|---|---|
+| 10 | s13a_landcover.png | 고론탈로와 술라웨시 위치 |
+| 11 | s11a_world_trade.png / s11b_east_asia_trade.png | 세계 교역 / 동아시아 확대 선택 |
+| 12 | s12_supply_chain.png | 포후와토와 소비국 공급망 |
+| 13 | s13a_landcover.png / s13b_terrain.png | 산림 피복 / 지형 선택 |
+| 15 | s15_satellite_comparison.png | 2020-02-24 / 2024-08-11 비교 원본 |
+| 16 | s16_forest_loss.png | 2021~2025 산림 손실과 면적 그래프 |
+| 18 | s18_shadow_atlas.png | 산림 손실과 공급망 결합 |
 
-다른 파일명을 사용하려면 `js/slides.js`의 해당 슬라이드 이미지 경로를 수정하세요.
+11번과 13번 상단 버튼으로 지도를 바꿉니다. 인쇄에서는 두 지도가 함께 나옵니다.
+원본 이미지의 세부 출처와 파일 해시는 `assets/maps/manifest.json`을 참고하세요.
 
 ## 수정
 

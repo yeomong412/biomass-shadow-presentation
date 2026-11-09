@@ -1,0 +1,53 @@
+{
+  "source_directory": "C:\\Users\\yeomo\\Documents\\Codex\\2026-11-09\\biomass-shadow-atlas-45-ppt-python\\outputs\\biomass-shadow-atlas",
+  "files": [
+    {
+      "file": "s11a_world_trade.png",
+      "sha256": "8f8ac05a691eb377d1a321eea808463a3fca258ca1ff95992a7268f61f752ccb",
+      "width": 3840,
+      "height": 2160
+    },
+    {
+      "file": "s11b_east_asia_trade.png",
+      "sha256": "dd95c96511c14a6af0a4ac4c41f70c113347d7c81639790bece6f2b73d6e5a5e",
+      "width": 3840,
+      "height": 2160
+    },
+    {
+      "file": "s12_supply_chain.png",
+      "sha256": "842efe5355d7b4d1a1fb0d4cfc5fcac2dce975910cb806ac5ae9040989bf7e69",
+      "width": 3840,
+      "height": 2160
+    },
+    {
+      "file": "s13a_landcover.png",
+      "sha256": "3ebb2a66c4711e62021dba7828531d07578a8b35832020ccf7d79feb6b3a81e6",
+      "width": 3840,
+      "height": 2160
+    },
+    {
+      "file": "s13b_terrain.png",
+      "sha256": "22abc30323387e3a67affc3edaf069e935b5b01bd3560a5c10419683180b5ab7",
+      "width": 3840,
+      "height": 2160
+    },
+    {
+      "file": "s15_satellite_comparison.png",
+      "sha256": "5521913b138edf13b04a68ff92f1f69e7abf6fd2670f43e0da71caeda4ddfe57",
+      "width": 3840,
+      "height": 2160
+    },
+    {
+      "file": "s16_forest_loss.png",
+      "sha256": "a37f758cc0ad856030cc610431d9339b8753bf41fddf27a34074610c8906adcc",
+      "width": 3840,
+      "height": 2160
+    },
+    {
+      "file": "s18_shadow_atlas.png",
+      "sha256": "1c2cea04b6520d3a1597a087ab40c891e45d217cec72b41e8d6e5a205cafd84c",
+      "width": 3840,
+      "height": 2160
+    }
+  ]
+}

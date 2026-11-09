@@ -2,8 +2,9 @@ const S=(title,chapter,body,opts={})=>({title,chapter,body,...opts});
 const card=(title,detail,more='')=>`<div class="card"><h3>${title}</h3><p>${detail}</p>${more?`<span class="small">${more}</span>`:''}</div>`;
 const cards=(items,cls='cols3')=>`<div class="grid ${cls}">${items.map(x=>card(...x)).join('')}</div>`;
 const panel=(head,body,cls='')=>`<div class="panel ${cls}"><h3>${head}</h3><p>${body}</p></div>`;
-const fig=(label,filename,hint='')=>`<figure class="figure" data-image="${filename}"><img src="assets/maps/${filename}" alt="${label}" loading="lazy"><div class="fallback"><span class="mapmark">⌖</span><b>${label}</b>${hint?`<small>${hint}</small>`:''}</div></figure>`;
-const mapSlide=(label,filename,items)=>`<div class="maparea">${fig(label,filename)}<div class="stack">${items.map(x=>card(...x)).join('')}</div></div>`;
+const fig=(label,filename,hint='')=>`<figure class="figure" data-image="${filename}"><img src="assets/maps/${filename}" alt="${label}" loading="eager" width="3840" height="2160"><div class="fallback"><span class="mapmark">⌖</span><b>${label}</b>${hint?`<small>${hint}</small>`:''}</div></figure>`;
+const mapSlide=(label,filename,items)=>`<div class="mapframe">${fig(label,filename)}<div class="mapcaption">${items.map(x=>`<span><b>${x[0]}</b> ${x[1]}</span>`).join('')}</div></div>`;
+const mapPair=(maps,caption)=>`<div class="mapframe"><div class="maptabs" role="group" aria-label="지도 선택">${maps.map((m,i)=>`<button type="button" data-map="${i}" aria-pressed="${i===0}">${m[0]}</button>`).join('')}</div><div class="mapviews">${maps.map((m,i)=>`<div class="mapview" ${i?'hidden':''}>${fig(m[0],m[1])}</div>`).join('')}</div><div class="mapcaption">${caption}</div></div>`;
 const metric=(v,caption)=>`<div class="card"><div class="value">${v}</div><p>${caption}</p></div>`;
 const q=(items)=>`<div>${items.map((x,i)=>`<div class="question"><b>0${i+1}</b><span>${x}</span></div>`).join('')}</div>`;
 const steps=(items)=>`<div class="steps">${items.map((x,i)=>`${i?'<span class="step-arrow">→</span>':''}<div class="card"><span class="small">0${i+1}</span><h3>${x[0]}</h3><p>${x[1]}</p></div>`).join('')}</div>`;
@@ -18,15 +19,15 @@ S('바이오매스의 종류','바이오매스의 구조',cards([['목질계 바
 S('목재펠릿 생산 과정','바이오매스의 구조',steps([['원료 확보','벌채와 수집'],['가공','파쇄와 건조'],['압축','펠릿 제조'],['발전','연소와 전력 생산']])),
 S('한국의 목재펠릿 수입 구조','바이오매스의 구조',`<div class="grid cols2">${metric('340만 t','2023년 원목 유래 목재펠릿 사용량')}${metric('98%','해당 원료의 해외 수입 비율')}</div>`,{source:'산업통상자원부, 2024'}),
 S('국경을 넘는 공급망','바이오매스의 구조',`<div class="route"><span>고론탈로 산림</span><i></i><span>목재펠릿</span><i></i><span>한국과 일본</span></div><div class="ribbon" style="margin-top:56px">연료는 이동하지만 산림 변화는 생산지에 남는다.</div>`),
-S('사례 지역, 고론탈로','바이오매스의 구조',mapSlide('인도네시아 술라웨시섬과 고론탈로','slide10_gorontalo_overview.png',[['연구 지역','인도네시아 술라웨시섬 북부'],['핵심 사례','포후와토 지역 목재펠릿 공급망']])),
-S('국제 목재펠릿 무역','그림자지도의 분석',mapSlide('국제 목재펠릿 교역 지도','slide11_global_trade.png',[['생산국','인도네시아'],['소비국','한국과 일본']]),{source:'환경단체 공동 보고서, 2024'}),
-S('고론탈로에서 한국과 일본까지','그림자지도의 분석',mapSlide('목재펠릿 공급망 지도','slide12_supply_chain.png',[['99% 이상','2021~2023년 인도네시아 펠릿 수출의 한국과 일본 비중'],['물류 거점','고론탈로와 랄라페항']]),{source:'Unheeded Warnings, 2024'}),
-S('고론탈로의 산림과 지형','그림자지도의 분석',mapSlide('고론탈로 산림과 지형 지도','slide13_forest_terrain.png',[['주요 요소','산림 피복과 개발지역'],['추적 대상','사업 구역, 도로, 항만'] ])),
+S('사례 지역, 고론탈로','바이오매스의 구조',mapSlide('인도네시아 술라웨시섬과 고론탈로','s13a_landcover.png',[['연구 지역','인도네시아 술라웨시섬 북부'],['핵심 사례','포후와토 지역 목재펠릿 공급망']])),
+S('국제 목재펠릿 무역','그림자지도의 분석',mapPair([['세계 교역','s11a_world_trade.png'],['동아시아 확대','s11b_east_asia_trade.png']],'<span><b>공급국</b> 초록</span><span><b>소비국</b> 파랑</span><span>2023년 한국과 일본의 주요 수입국</span>'),{source:'UN Comtrade, 2023 HS440131'}),
+S('고론탈로에서 한국과 일본까지','그림자지도의 분석',mapSlide('목재펠릿 공급망 지도','s12_supply_chain.png',[['99% 이상','2021~2023년 인도네시아 펠릿 수출의 한국과 일본 비중'],['물류 거점','고론탈로와 랄라페항']]),{source:'Unheeded Warnings, 2024'}),
+S('고론탈로의 산림과 지형','그림자지도의 분석',mapPair([['산림 피복','s13a_landcover.png'],['지형','s13b_terrain.png']],'<span><b>고론탈로주</b> 술라웨시섬 북부</span><span><b>포후와토군</b> 빨간 경계</span>'),{source:'ESA WorldCover 2021 / Copernicus DEM'}),
 S('1,032ha의 산림 벌채','그림자지도의 분석',`<div class="two"><div class="panel white"><div class="numline">1,032<span style="font-size:44px"> ha</span></div><p>10.32 km²</p></div>${panel('2024년 1월~8월','고론탈로 두 업체의 목재펠릿 생산 관련 벌채 조사','white')}</div>`,{source:'Auriga Nusantara 조사 인용, 2024'}),
-S('위성에서 본 산림 변화','그림자지도의 분석',`<div class="two"><div style="display:flex;flex-direction:column;gap:16px;min-height:0"><div class="lead">2020</div>${fig('2020년 산림 위성영상','slide15_satellite_2020.png')}</div><div style="display:flex;flex-direction:column;gap:16px;min-height:0"><div class="lead">2024</div>${fig('2024년 산림 위성영상','slide15_satellite_2024.png')}</div></div>`),
-S('산림 손실의 시간적 분포','그림자지도의 분석',mapSlide('연도별 산림 손실 지도','slide16_forest_loss.png',[['분석 연도','2021~2025년'],['핵심 지표','연도별 산림 피복 손실 면적']])),
+S('위성에서 본 산림 변화','그림자지도의 분석',mapSlide('2020년과 2024년 Sentinel-2 위성영상 비교','s15_satellite_comparison.png',[['왼쪽','2020-02-24'],['오른쪽','2024-08-11']]),{source:'Copernicus Sentinel-2 / Element 84'}),
+S('산림 손실의 시간적 분포','그림자지도의 분석',mapSlide('연도별 산림 손실 지도','s16_forest_loss.png',[['분석 연도','2021~2025년'],['핵심 지표','연도별 산림 피복 손실 면적']])),
 S('산림 면적과 생태계의 차이','그림자지도의 분석',`<div class="compare">${panel('자연림','다양한 수종과 서식지 구조','white')}<div class="versus">≠</div>${panel('단일 수종 조림지','단순화된 수종 구성과 서식지 구조','white')}</div>`),
-S('편익과 부담의 그림자지도','그림자지도의 분석',mapSlide('종합 그림자지도','slide18_shadow_atlas.png',[['소비 지역','전력 공급과 에너지 전환'],['생산 지역','산림 변화와 지역 생활환경']]),{dark:false}),
+S('편익과 부담의 그림자지도','그림자지도의 분석',mapSlide('종합 그림자지도','s18_shadow_atlas.png',[['소비 지역','전력 공급과 에너지 전환'],['생산 지역','산림 변화와 지역 생활환경']]),{dark:false}),
 S('목재 연소와 탄소 순환','탄소중립과 환경 불평등',`${cards([['01','벌채'],['02','목재 연소'],['03','CO₂ 방출'],['04','산림 재성장']], 'cols4')}<div class="ribbon" style="margin-top:48px">탄소는 빠르게 방출되지만 재흡수에는 시간이 필요하다.</div>`),
 S('탄소부채와 회복 시간','탄소중립과 환경 불평등',graph,{source:'탄소부채 개념 모델'}),
 S('전 과정으로 평가하기','탄소중립과 환경 불평등',steps([['원료 생산','산림과 토지 이용'],['가공','건조와 압축'],['수송','육상과 해상 운송'],['발전','연소와 전력 공급']])),
