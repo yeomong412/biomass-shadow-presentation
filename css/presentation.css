@@ -5,8 +5,11 @@
 .figure img{background:#f5f2e9}
 .mapframe{flex:1;min-height:0;display:flex;flex-direction:column;gap:16px}
 .mapframe>.figure{flex:1}
-.mapcaption{display:flex;justify-content:center;align-items:center;gap:32px;min-height:40px;font-size:28px;line-height:1.4;flex-wrap:wrap}
-.mapcaption b{color:var(--forest);margin-right:8px}
+.material-caption{display:grid;gap:8px;font-size:26px;line-height:1.4;text-align:center}
+.material-caption p{margin:0}
+.material-caption b{color:var(--forest);margin-right:8px}
+.graph{flex:1;min-height:0}
+.graph+.material-caption{margin-top:16px}
 .maptabs{display:flex;gap:16px;justify-content:center}
 .maptabs button{border:2px solid var(--forest);border-radius:8px;padding:8px 24px;font-size:28px;font-weight:750;background:white;color:var(--forest);cursor:pointer}
 .maptabs button[aria-pressed="true"]{background:var(--forest);color:white}
@@ -36,3 +39,13 @@
 .dark .bullet-list li{color:#e5f0e7}
 .dark .slide-question{background:#234b3c;color:#eaf4eb;border-color:#a8d6b5}
 @media print{.bullet-list,.slide-question{break-inside:avoid}}
+
+.references{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 32px}
+.reference-group{padding:24px 32px;background:#fff;border:2px solid var(--border);border-radius:24px}
+.reference-group h3{margin:0 0 16px;font-size:32px;color:var(--forest)}
+.reference-group ul{display:grid;gap:16px;margin:0;padding:0;list-style:none}
+.reference-group a,.reference-group li span{display:block}
+.references a{color:var(--forest);font-weight:800;text-underline-offset:4px}
+.reference-group a{font-size:26px;line-height:1.3}
+.reference-group li span,.reference-detail{font-size:24px;line-height:1.35;color:var(--muted)}
+.reference-detail{grid-column:1/-1;margin:0;text-align:center}

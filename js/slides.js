@@ -5,8 +5,10 @@ const card=(title,detail,more='')=>`<div class="card"><h3>${title}</h3>${Array.i
 const cards=(items,cls='cols3')=>`<div class="grid ${cls}">${items.map(x=>card(...x)).join('')}</div>`;
 const panel=(head,body,cls='')=>`<div class="panel ${cls}"><h3>${head}</h3>${Array.isArray(body)?bullets(body,'panel-list'):`<p>${body}</p>`}</div>`;
 const fig=(label,filename,hint='')=>`<figure class="figure" data-image="${filename}"><img src="assets/maps/${filename}" alt="${label}" loading="eager" width="3840" height="2160"><div class="fallback"><span class="mapmark">⌖</span><b>${label}</b>${hint?`<small>${hint}</small>`:''}</div></figure>`;
-const mapSlide=(label,filename,items)=>`<div class="mapframe">${fig(label,filename)}<div class="mapcaption">${items.map(x=>`<span><b>${x[0]}</b> ${x[1]}</span>`).join('')}</div></div>`;
-const mapPair=(maps,caption)=>`<div class="mapframe"><div class="maptabs" role="group" aria-label="지도 선택">${maps.map((m,i)=>`<button type="button" data-map="${i}" aria-pressed="${i===0}">${m[0]}</button>`).join('')}</div><div class="mapviews">${maps.map((m,i)=>`<div class="mapview" ${i?'hidden':''}>${fig(m[0],m[1])}</div>`).join('')}</div><div class="mapcaption">${caption}</div></div>`;
+const materialCaption=items=>`<div class="material-caption">${items.map(([label,text])=>`<p><b>${label}</b> ${text}</p>`).join('')}</div>`;
+const mapSlide=(label,filename,items)=>`<div class="mapframe">${fig(label,filename)}${materialCaption(items)}</div>`;
+const mapPair=(maps,items)=>`<div class="mapframe"><div class="maptabs" role="group" aria-label="지도 선택">${maps.map((m,i)=>`<button type="button" data-map="${i}" aria-pressed="${i===0}">${m[0]}</button>`).join('')}</div><div class="mapviews">${maps.map((m,i)=>`<div class="mapview" ${i?'hidden':''}>${fig(m[0],m[1])}</div>`).join('')}</div>${materialCaption(items)}</div>`;
+const referenceList=(title,items)=>`<section class="reference-group"><h3>${title}</h3><ul>${items.map(([label,url,detail])=>`<li><a href="${url}" target="_blank" rel="noopener">${label}</a><span>${detail}</span></li>`).join('')}</ul></section>`;
 const metric=(v,caption)=>`<div class="card"><div class="value">${v}</div><p>${caption}</p></div>`;
 const q=(items)=>`<div>${items.map((x,i)=>`<div class="question"><b>0${i+1}</b><span>${x}</span></div>`).join('')}</div>`;
 const steps=(items)=>`<div class="steps">${items.map((x,i)=>`${i?'<span class="step-arrow">→</span>':''}<div class="card"><span class="small">0${i+1}</span><h3>${x[0]}</h3><p>${x[1]}</p></div>`).join('')}</div>`;
@@ -19,19 +21,19 @@ S('어디까지 살펴봐야 할까?','문제 제기',`<div class="two">${panel(
 S('세 가지 연구 질문','문제 제기',q(['목재펠릿은 어디에서 생산되는가?','산림 변화는 어디에서 발생하는가?','발전의 편익과 환경 부담은 누구에게 돌아가는가?'])),
 S('바이오매스의 종류','바이오매스의 구조',`${cards([['목질계 바이오매스',['원목과 목재펠릿','톱밥과 목재 부산물']],['농업 잔재',['볏짚과 왕겨','수확 후 남은 부산물']],['유기성 폐기물',['음식물과 가축 분뇨','바이오가스 생산']]], 'cols3')}${ask('같은 바이오매스라도 원료의 출처가 다르면?')}`),
 S('목재펠릿 생산 과정','바이오매스의 구조',`${steps([['원료 확보','원목과 부산물의 구분'],['가공','파쇄, 건조, 에너지 투입'],['압축','펠릿화와 포장'],['발전','연소와 전력 생산']])}${bullets(['원료에 따라 산림 영향이 달라짐','가공과 운송에도 에너지가 필요함'],'inline')}`),
-S('한국의 목재펠릿 수입 구조','바이오매스의 구조',`<div class="grid cols2">${metric('340만 t','2023년 원목 유래 목재펠릿 사용량')}${metric('98%','해당 원료의 해외 수입 비율')}</div>${bullets(['소비국의 연료 수요가 해외 생산지와 연결','수입량과 산림 변화를 함께 살펴볼 필요'],'inline')}`,{source:'산업통상자원부, 2024'}),
+S('한국의 목재펠릿 수입 구조','바이오매스의 구조',`<div class="grid cols2">${metric('340만 t','2023년 원목 유래 목재펠릿 사용량')}${metric('98%','해당 원료의 해외 수입 비율')}</div>${bullets(['98%는 원목 유래 펠릿 340만 t 중 수입분의 비율','소비국의 연료 수요가 해외 생산지와 연결'],'inline')}`,{source:'산업통상자원부, 2024'}),
 S('국경을 넘는 공급망','바이오매스의 구조',`<div class="route"><span>고론탈로 산림</span><i></i><span>목재펠릿</span><i></i><span>한국과 일본</span></div><div class="ribbon" style="margin-top:40px">연료는 이동하지만 산림 변화는 생산지에 남는다.</div>${bullets(['산림에서 원료 확보와 가공','인도네시아에서 목재펠릿 수출','한국과 일본에서 발전 연료로 소비'])}`),
-S('사례 지역, 고론탈로','바이오매스의 구조',mapSlide('인도네시아 술라웨시섬과 고론탈로','s13a_landcover.png',[['연구 지역','인도네시아 술라웨시섬 북부'],['핵심 사례','포후와토 지역 목재펠릿 공급망']])) ,
-S('국제 목재펠릿 무역','그림자지도의 분석',mapPair([['세계 교역','s11a_world_trade.png'],['동아시아 확대','s11b_east_asia_trade.png']],'<span><b>공급국</b> 초록</span><span><b>소비국</b> 파랑</span><span>2023년 한국과 일본의 주요 수입국</span>'),{source:'UN Comtrade, 2023 HS440131'}),
-S('고론탈로에서 한국과 일본까지','그림자지도의 분석',mapSlide('목재펠릿 공급망 지도','s12_supply_chain.png',[['99% 이상','2021~2023년 인도네시아 펠릿 수출의 한국과 일본 비중'],['물류 거점','고론탈로와 랄라페항']]),{source:'Unheeded Warnings, 2024'}),
-S('고론탈로의 산림과 지형','그림자지도의 분석',mapPair([['산림 피복','s13a_landcover.png'],['지형','s13b_terrain.png']],'<span><b>고론탈로주</b> 술라웨시섬 북부</span><span><b>포후와토군</b> 빨간 경계</span>'),{source:'ESA WorldCover 2021 / Copernicus DEM'}),
-S('1,032ha의 산림 벌채','그림자지도의 분석',`<div class="two"><div class="panel white"><div class="numline">1,032<span style="font-size:44px"> ha</span></div><p>10.32 km²</p><p class="metric-caption">조사된 벌채 면적</p></div>${panel('2024년 1월~8월',['고론탈로 지역 두 업체 조사','목재펠릿 생산 관련 벌채','자연림에서 단일 수종 조림지로 전환'],'white')}</div>`,{source:'Auriga Nusantara 조사 인용, 2024'}),
-S('위성에서 본 산림 변화','그림자지도의 분석',mapSlide('2020년과 2024년 Sentinel-2 위성영상 비교','s15_satellite_comparison.png',[['왼쪽','2020-02-24'],['오른쪽','2024-08-11']]),{source:'Copernicus Sentinel-2 / Element 84'}),
-S('산림 손실의 시간적 분포','그림자지도의 분석',mapSlide('연도별 산림 손실 지도','s16_forest_loss.png',[['분석 연도','2021~2025년'],['핵심 지표','연도별 산림 피복 손실 면적']])),
+S('사례 지역, 고론탈로','바이오매스의 구조',mapSlide('인도네시아 술라웨시섬과 고론탈로','s13a_landcover.png',[['위치','술라웨시섬 북부의 고론탈로주에서 빨간 경계로 표시한 포후와토군을 살펴본다.'],['분석 범위','포후와토군 경계는 16번 슬라이드의 연도별 손실 면적을 집계한 범위다.']]),{source:'ESA WorldCover 2021 / geoBoundaries'}),
+S('국제 목재펠릿 무역','그림자지도의 분석',mapPair([['세계 교역','s11a_world_trade.png'],['동아시아 확대','s11b_east_asia_trade.png']],[['세계 교역','2023년 수입 신고의 순중량으로 한국과 일본의 상위 5개 공급국을 각각 골랐다.'],['동아시아 확대','주변 공급국과 인도네시아산 수입량을 확대해 보여 준다. 화살표는 교역 관계를 뜻한다.']]),{source:'UN Comtrade, 2023 HS 440131'}),
+S('고론탈로에서 한국과 일본까지','그림자지도의 분석',mapSlide('목재펠릿 공급망 지도','s12_supply_chain.png',[['점과 점선','점은 랄라페항, 점선은 포후와토의 펠릿이 한국과 일본으로 수출되는 관계를 뜻한다.'],['99% 이상','2021~2023년 인도네시아 전체 펠릿 수출에서 한국과 일본이 차지한 비중이다.']]),{source:'Unheeded Warnings, 2024 / 고론탈로주 정부, 2025'}),
+S('고론탈로의 산림과 지형','그림자지도의 분석',mapPair([['산림 피복','s13a_landcover.png'],['지형','s13b_terrain.png']],[['산림 피복','2021년 위성 분류 자료로 수목, 경작지 등 지표를 덮는 유형의 분포를 보여 준다.'],['지형','고도 자료의 색으로 지표면 높이(m)를 읽는다. 두 지도 모두 빨간 선은 포후와토군 경계다.']]),{source:'ESA WorldCover 2021 / Copernicus DEM GLO-30'}),
+S('1,032ha의 산림 벌채','그림자지도의 분석',`<div class="two"><div class="panel white"><div class="numline">1,032<span style="font-size:44px"> ha</span></div><p>10.32 km²</p><p class="metric-caption">두 업체의 조사 면적 합계</p></div>${panel('2024년 1월~8월',['고론탈로의 BTL과 IGL 두 업체 조사','목재펠릿 생산 관련 벌채','자연림에서 단일 수종 조림지로 전환'],'white')}</div>`,{source:'Auriga Nusantara 조사, Unheeded Warnings (2024), 20쪽'}),
+S('위성에서 본 산림 변화','그림자지도의 분석',mapSlide('2020년과 2024년 Sentinel-2 위성영상 비교','s15_satellite_comparison.png',[['두 시점','왼쪽 2020-02-24, 오른쪽 2024-08-11. 포후와토 서부의 같은 구역을 비교했다.'],['비교 방법','두 영상의 RGB에 같은 밝기 보정을 적용해 숲 사이에 열린 구역의 위치와 모양을 비교했다.']]),{source:'Copernicus Sentinel-2 L2A / Element 84'}),
+S('산림 손실의 시간적 분포','그림자지도의 분석',mapSlide('연도별 산림 손실 지도와 면적 막대그래프','s16_forest_loss.png',[['읽는 법','지도 색은 2021~2025년 수목 피복이 사라진 해, 막대 높이는 그해의 손실 면적(ha)이다.'],['만든 법','포후와토군에서 2000년 수관율이 30% 이상이던 픽셀을 골라, 손실 연도별로 지표면 면적을 합산했다.']]),{source:'Hansen Global Forest Change v1.13 / geoBoundaries ADM2'}),
 S('산림 면적과 생태계의 차이','그림자지도의 분석',`<div class="compare">${panel('자연림',['다양한 수종과 수직 구조','복잡한 서식지와 먹이망','탄소 저장과 생물다양성'],'white')}<div class="versus">≠</div>${panel('단일 수종 조림지',['특정 수종 중심의 식생','상대적으로 단순한 서식지','면적만으로 생태적 가치 비교 곤란'],'white')}</div>`),
-S('편익과 부담의 그림자지도','그림자지도의 분석',mapSlide('종합 그림자지도','s18_shadow_atlas.png',[['소비 지역','전력 공급과 에너지 전환'],['생산 지역','산림 변화와 지역 생활환경']]),{dark:false}),
+S('편익과 부담의 그림자지도','그림자지도의 분석',mapSlide('종합 그림자지도','s18_shadow_atlas.png',[['생산지','포후와토군 전체의 관측 손실과 두 업체의 1,032ha 조사 결과를 각각 표시했다.'],['소비지','수출 연결선을 따라 한국과 일본의 발전 연료 공급과 생산지의 산림 변화를 함께 읽는다.']]),{source:'Hansen Global Forest Change / Unheeded Warnings / 고론탈로주 정부'}),
 S('목재 연소와 탄소 순환','탄소중립과 환경 불평등',`${cards([['01 벌채','산림 탄소 저장량 감소'],['02 연소','저장된 탄소의 빠른 방출'],['03 재성장','시간에 따른 탄소 재흡수'],['04 비교','산림 유지 시나리오와 대조']], 'cols4')}<div class="ribbon" style="margin-top:32px">탄소는 빠르게 방출되지만 재흡수에는 시간이 필요하다.</div>${bullets(['연소 배출은 현재 발생','회복에는 장기간이 필요'],'inline')}`),
-S('탄소부채와 회복 시간','탄소중립과 환경 불평등',graph,{source:'탄소부채 개념 모델'}),
+S('탄소부채와 회복 시간','탄소중립과 환경 불평등',graph+materialCaption([['읽는 법','가로축은 벌채 후 시간, 세로축은 산림을 유지했을 때와 비교한 탄소부채다.'],['만든 법','같은 출발점에서 빠른 회복과 느린 회복을 가정해 SVG 곡선 두 개로 그린 개념도다.']]),{source:'IEA Bioenergy 참고 / 발표용 개념도'}),
 S('전 과정으로 평가하기','탄소중립과 환경 불평등',`${steps([['원료 생산','산림과 토지 이용 변화'],['가공','건조와 압축에 쓰인 에너지'],['수송','육상과 해상 운송'],['발전','연소와 전력 공급']])}${bullets(['토지 이용 변화는 연소량만으로 알 수 없음','원료부터 발전까지 같은 기준으로 비교'],'inline')}`),
 S('비교 기준에 따라 달라지는 결과','탄소중립과 환경 불평등',`<div class="timebar"><div class="label">자연림 유지</div><div class="bar">산림 탄소 저장과 생태계 보전</div></div><div class="timebar"><div class="label">목재펠릿 생산</div><div class="bar">연료 생산과 발전 편익</div></div><div class="timebar"><div class="label">잔재 활용</div><div class="bar">기존 부산물의 에너지 활용</div></div>${ask('어떤 원료를 사용하고, 무엇과 비교하는가?')}`),
 S('탄소는 어느 부문에 기록되는가?','탄소중립과 환경 불평등',`<div class="two">${panel('발전 부문',['연소 시 발생하는 생물기원 CO₂','에너지 부문에서 별도 보고'],'white')}${panel('토지 이용 부문',['산림 탄소 저장량의 변화','토지 이용과 산림 전환 반영'],'white')}</div>`,{source:'IPCC 국가 온실가스 인벤토리 지침'}),
@@ -41,5 +43,22 @@ S('지속 가능한 공급망의 조건','대안과 결론',`${steps([['위치 �
 S('한국의 정책 변화','대안과 결론',`<div class="policy"><b>01</b><span>신규 목질계 설비의 REC 지원 제한</span></div><div class="policy"><b>02</b><span>기존 설비 지원의 단계적 조정</span></div><div class="policy"><b>03</b><span>원료 관리와 수입의존도 개선</span></div>${ask('발전량뿐 아니라 원료의 지속가능성도 평가해야 할까?')}`,{source:'산업통상자원부, 2024년 개선안'}),
 S('세 가지 결론','대안과 결론',q(['연료의 생산지와 소비지는 분리되어 있다.','탄소중립은 원료와 산림의 변화에 달려 있다.','지속가능성을 판단하려면 공급망 전체를 추적해야 한다.'])),
 S('재생에너지의 기준','대안과 결론',`<div class="big">자연림을 제거해 만든 목재펠릿을<br><span class="orange">재생에너지로 지원해야 할까?</span></div>`,{dark:true}),
-S('에너지 전환의 진짜 성과','결론',`<div class="ending"><div class="eyebrow">CONCLUSION</div><div class="big">전력의 생산량뿐 아니라<br><span class="orange">원료가 떠나온 숲의 변화</span>까지<br>살펴봐야 한다.</div></div>`,{dark:true,source:'3308 여은수'})
+S('에너지 전환의 진짜 성과','결론',`<div class="ending"><div class="eyebrow">CONCLUSION</div><div class="big">전력의 생산량뿐 아니라<br><span class="orange">원료가 떠나온 숲의 변화</span>까지<br>살펴봐야 한다.</div></div>`,{dark:true,source:'3308 여은수'}),
+S('참고문헌','출처',`<div class="references">
+  ${referenceList('보고서와 정책',[
+    ['산업통상자원부 (2024)','https://www.motir.go.kr/kor/article/ATCL3f49a5a8c/169947/view','바이오매스 발전의 수입의존도 완화한다'],
+    ['Earth Insight 외 (2024)','https://forourclimate.org/research/538','Unheeded Warnings, 5쪽과 20~22쪽'],
+    ['고론탈로주 정부 (2025)','https://berita.gorontaloprov.go.id/2025/05/14/export-to-south-korea-and-japan-wood-pellet-from-gorontalo-on-fire/','랄라페항 목재펠릿 수출 보도'],
+    ['IPCC TFI','https://www.ipcc-nggip.iges.or.jp/faq/faq.html','국가 온실가스 인벤토리 FAQ Q2-10'],
+    ['IEA Bioenergy','https://www.ieabioenergy.com/iea-publications/faq/woodybiomass/carbon-neutrality/','Carbon neutrality, 산림 탄소의 회복과 비교 기준']
+  ])}
+  ${referenceList('지도와 그래프 데이터',[
+    ['UN Comtrade (2023)','https://comtradeplus.un.org/en/','HS 440131, 한국과 일본의 목재펠릿 수입'],
+    ['Hansen Global Forest Change v1.13','https://developers.google.com/earth-engine/datasets/catalog/UMD_hansen_global_forest_change_2025_v1_13','포후와토군 연도별 수목 피복 손실'],
+    ['ESA WorldCover 2021 v200','https://esa-worldcover.org/en/data-access','지표 피복 분류'],
+    ['Copernicus DEM GLO-30','https://registry.opendata.aws/copernicus-dem/','지표면 고도'],
+    ['Copernicus Sentinel-2 L2A','https://registry.opendata.aws/sentinel-2-l2a-cogs/','2020년과 2024년 RGB 영상']
+  ])}
+  <p class="reference-detail">경계, 항구 좌표, 위성 장면의 세부 출처는 <a href="assets/maps/source_catalog.csv">원자료 목록(CSV)</a>에 정리했다.</p>
+</div>`)
 ];
