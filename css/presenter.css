@@ -1,0 +1,119 @@
+html:has(.presenter){overflow:auto}
+.presenter{
+  display:flex;
+  flex-direction:column;
+  min-height:100dvh;
+  height:auto;
+  overflow:auto;
+  padding:24px clamp(16px,3vw,48px);
+  gap:16px;
+  background:#10251f;
+  color:#eef5ee;
+}
+.presenter :where(h1,h2,p):not(:where(.preview-stage *)){margin:0}
+.presenter :is(button,select):not(:where(.preview-stage *)){
+  border:1px solid #587568;
+  border-radius:8px;
+  background:#1e3b30;
+  color:#f1f8f0;
+  padding:8px 16px;
+  min-height:40px;
+  cursor:pointer;
+  font:inherit;
+}
+.presenter button:hover:not(:disabled,.preview-stage *){background:#305747}
+.presenter button:disabled,.presenter select:disabled{opacity:.5;cursor:default}
+.presenter :is(button,select,summary,.notes-body):focus-visible{
+  outline:3px solid #ffbf8f;
+  outline-offset:3px;
+}
+.presenter-header,.presenter-toolbar,.notes-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:16px;
+}
+.presenter-kicker{color:#9ac8ae;font-size:12px;font-weight:800;letter-spacing:.14em}
+.presenter-heading h1{font-size:clamp(26px,3vw,36px);line-height:1.25}
+#connection{margin-top:4px;color:#eacbb0;font-size:14px}
+#connection[data-connected="true"]{color:#aee3ba}
+.presenter-timer{display:flex;align-items:center;gap:16px 24px;flex-wrap:wrap}
+.presenter-timer span,.presenter-timer output{display:block}
+.presenter-timer span{font-size:13px;color:#b6cebf}
+.presenter-timer output{font-size:30px;font-weight:800;font-variant-numeric:tabular-nums}
+#remaining[data-overdue="true"]{color:#ffbf8f}
+.timer-buttons,.notes-controls{display:flex;gap:8px;flex-wrap:wrap}
+.presenter-toolbar{justify-content:flex-start;padding:12px 0;border-block:1px solid #345346}
+#presenter-counter{min-width:80px;text-align:center;font-weight:800;font-variant-numeric:tabular-nums}
+.presenter-toolbar label{color:#d0e3d6}
+#slide-jump{min-width:0;max-width:100%;text-overflow:ellipsis}
+.presenter-workspace{
+  display:grid;
+  grid-template-columns:minmax(0,5fr) minmax(0,6fr);
+  align-items:start;
+  gap:24px;
+}
+.presenter-previews{display:grid;gap:16px}
+.presenter-previews h2,.notes-header h2{font-size:18px;margin-bottom:8px}
+.preview-frame{
+  position:relative;
+  aspect-ratio:16/9;
+  overflow:hidden;
+  border-radius:8px;
+  background:#091914;
+  outline:1px solid #456558;
+}
+.preview-stage{
+  position:absolute;
+  inset:0 auto auto 0;
+  width:1600px;
+  height:900px;
+  transform-origin:top left;
+  transform:scale(var(--preview-scale,0));
+  color:var(--ink);
+  pointer-events:none;
+}
+.next-preview{width:min(100%,320px)}
+#next-empty{position:absolute;inset:0;display:grid;place-items:center;font-size:15px;color:#b6cebf}
+#next-empty[hidden],#presenter-maps[hidden]{display:none}
+#presenter-maps{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+#presenter-maps button[aria-pressed="true"],#notes-open{background:#c7e5cb;color:#17372e;font-weight:750}
+#presenter-maps button[aria-pressed="true"]:hover,#notes-open:hover{background:#e0f2e0}
+.presenter-notes{
+  display:flex;
+  flex-direction:column;
+  min-width:0;
+  max-height:max(420px,calc(100dvh - 224px));
+  min-height:320px;
+  padding:16px;
+  border:1px solid #456558;
+  border-radius:12px;
+  background:#162f25;
+}
+.notes-header h2{margin-bottom:0}
+#notes-time,#notes-status{font-size:14px;color:#b6cebf}
+#notes-status{margin-top:12px}
+#notes-status[data-error="true"]{color:#ffbf8f}
+.notes-body{
+  margin-top:12px;
+  min-height:0;
+  overflow:auto;
+  overscroll-behavior:contain;
+  padding:8px 12px 8px 0;
+  line-height:1.55;
+  font-size:var(--notes-size,24px);
+  white-space:pre-wrap;
+  overflow-wrap:anywhere;
+  scrollbar-gutter:stable;
+}
+.notes-body p+p{margin-top:16px}
+.notes-body .stage-direction{color:#f2ca9f;font-weight:650}
+.presenter-help{font-size:14px;color:#c8ddcf;line-height:1.6}
+.presenter-help summary{cursor:pointer;width:fit-content}
+.presenter-help ol{margin:8px 0 0;padding-left:24px}
+@media(max-width:760px){
+  .presenter-workspace{grid-template-columns:minmax(0,1fr)}
+  .presenter-notes{max-height:none}
+  .presenter-timer{gap:8px 16px}
+}

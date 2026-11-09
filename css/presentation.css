@@ -56,3 +56,19 @@
 .compare+.slide-question,.two+.slide-question,.policy~.slide-question{margin-bottom:40px}
 .policy{padding-block:24px;margin-bottom:8px}
 .discussion-options .card{min-height:152px;padding:24px 32px;gap:8px;justify-content:center}
+
+#presenter-launch{
+  position:fixed;z-index:1002;top:16px;right:16px;
+  border:1px solid #668d7a;border-radius:8px;padding:8px 16px;
+  background:#142b25;color:white;font-weight:750;cursor:pointer;
+}
+#presenter-launch:hover{background:#265041}
+#presenter-launch:focus-visible{outline:3px solid #f0ac81;outline-offset:3px}
+#presenter-feedback{
+  position:fixed;z-index:1002;top:64px;right:16px;max-width:min(420px,calc(100vw - 32px));
+  padding:16px;background:#142b25;color:white;border-radius:8px;line-height:1.5;
+}
+#presenter-feedback:empty{display:none}
+:fullscreen #presenter-launch,:fullscreen #presenter-feedback,
+.presenter-audience:fullscreen #nav,.presenter-audience:fullscreen #progress{display:none}
+@media print{#presenter-launch,#presenter-feedback{display:none}}

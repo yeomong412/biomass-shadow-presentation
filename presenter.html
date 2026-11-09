@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#102e26">
+  <title>발표자 도구 | 바이오매스 그림자지도</title>
+  <link rel="stylesheet" href="css/presentation.css?v=presenter-1">
+  <link rel="stylesheet" href="css/presenter.css">
+</head>
+<body class="presenter">
+  <header class="presenter-header">
+    <div class="presenter-heading">
+      <p class="presenter-kicker">BIOMASS SHADOW ATLAS</p>
+      <h1>발표자 도구</h1>
+      <p id="connection" role="status">청중 창에 연결하는 중</p>
+    </div>
+    <section class="presenter-timer" aria-label="발표 타이머">
+      <div><span>경과</span><output id="elapsed">00:00</output></div>
+      <div><span id="remaining-label">남은 시간</span><output id="remaining">45:00</output></div>
+      <div class="timer-buttons">
+        <button id="timer-toggle" type="button">시작</button>
+        <button id="timer-reset" type="button">초기화</button>
+      </div>
+    </section>
+  </header>
+
+  <div class="presenter-toolbar" role="group" aria-label="청중 슬라이드 조작">
+    <button id="presenter-prev" type="button" disabled>← 이전</button>
+    <span id="presenter-counter" aria-live="polite">— / —</span>
+    <button id="presenter-next" type="button" disabled>다음 →</button>
+    <label for="slide-jump">슬라이드 이동</label>
+    <select id="slide-jump" disabled></select>
+  </div>
+
+  <main class="presenter-workspace">
+    <section class="presenter-previews" aria-label="슬라이드 미리보기">
+      <div>
+        <h2 id="current-label">현재 슬라이드</h2>
+        <div class="preview-frame" id="current-preview" aria-labelledby="current-label">
+          <div class="preview-stage"></div>
+        </div>
+        <div id="presenter-maps" aria-label="현재 슬라이드 지도 선택" role="group" hidden></div>
+      </div>
+      <div>
+        <h2 id="next-label">다음 슬라이드</h2>
+        <div class="preview-frame next-preview" id="next-preview" aria-labelledby="next-label">
+          <div class="preview-stage"></div>
+          <p id="next-empty" hidden>마지막 슬라이드입니다.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="presenter-notes" aria-labelledby="notes-heading">
+      <header class="notes-header">
+        <div>
+          <h2 id="notes-heading">발표 대본</h2>
+          <p id="notes-time"></p>
+        </div>
+        <div class="notes-controls">
+          <button id="notes-open" type="button">대본 파일 열기</button>
+          <input id="notes-file" type="file" accept=".md,.txt,text/markdown,text/plain" hidden>
+          <button id="notes-smaller" type="button" aria-label="대본 글자 작게">가−</button>
+          <button id="notes-larger" type="button" aria-label="대본 글자 크게">가+</button>
+        </div>
+      </header>
+      <p id="notes-status" role="status">45분 발표 대본(.md)을 열면 현재 장에 맞춰 표시됩니다.</p>
+      <div id="notes-body" class="notes-body" tabindex="0" aria-label="현재 장 대본">
+        <p>대본 파일을 선택해 주세요.</p>
+      </div>
+    </section>
+  </main>
+
+  <details class="presenter-help">
+    <summary>두 화면에 배치하는 방법</summary>
+    <ol>
+      <li>HDMI를 연결하고 Windows 키 + P에서 <strong>확장</strong>을 선택합니다.</li>
+      <li>발표자 도구는 노트북에 둡니다. 청중 창을 선택해 Windows 키 + Shift + ← 또는 →로 외부 화면에 옮깁니다.</li>
+      <li>외부 화면의 청중 창에서 F 키를 눌러 슬라이드를 전체 화면으로 띄웁니다.</li>
+      <li>발표자 도구로 돌아와 대본을 열고 타이머를 시작합니다. 방향키, 스페이스바, Page Up / Down으로 장을 넘길 수 있습니다.</li>
+    </ol>
+  </details>
+
+  <script src="js/slides.js"></script>
+  <script src="js/slide-view.js"></script>
+  <script src="js/presenter-link.js"></script>
+  <script src="js/presenter.js"></script>
+</body>
+</html>
