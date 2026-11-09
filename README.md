@@ -1,29 +1,45 @@
-# biomass-shadow-presentation
+# 바이오매스 발전의 편익과 산림 훼손의 공간적 분포
 
-바이오매스 그림자지도를 주제로 한 약 45분 분량의 HTML 발표자료를 준비하는 비공개 프로젝트입니다.
+45분 분량의 HTML 발표자료 30장입니다. `index.html`을 브라우저에서 열면 실행됩니다. 정적 웹사이트이므로 GitHub Pages에 그대로 배포할 수 있습니다.
 
-## 현재 상태
+## 조작
 
-프로젝트 기본 공간만 구성했습니다. 발표 본문과 슬라이드는 아직 제작하지 않았습니다. 기존에 생성한 지도 이미지는 이 작업에 제공되지 않아 포함하지 않았습니다.
+- 오른쪽 방향키, 스페이스바, PageDown: 다음 장
+- 왼쪽 방향키, PageUp: 이전 장
+- Home / End: 처음 / 마지막
+- O: 전체 슬라이드 목록, F: 전체화면
+- 화면 좌우 끝 클릭, 모바일 좌우 스와이프 지원
+- 브라우저 인쇄: 장별 PDF 출력
 
-## 폴더 구성
+## 이미지
 
-- `index.html`: 빈 프레젠테이션 프로젝트 안내 페이지
-- `assets/images/`: 발표용 일반 이미지
-- `assets/maps/`: Python으로 생성한 지도 이미지
-- `assets/fonts/`: 사용 권한을 확인한 글꼴
-- `css/`: 발표 화면 스타일
-- `js/`: 발표 화면 동작
+현재 저장소에 지도 이미지가 없기 때문에 누락 이미지용 대체 화면을 제공합니다. 실제 PNG를 `assets/maps/` 폴더에 넣고 파일명을 아래와 일치시키면 자동으로 표시됩니다.
 
-빈 폴더의 `.gitkeep`은 Git에서 폴더 구조를 유지하기 위한 파일입니다.
+- slide10_gorontalo_overview.png
+- slide11_global_trade.png
+- slide12_supply_chain.png
+- slide13_forest_terrain.png
+- slide15_satellite_2020.png
+- slide15_satellite_2024.png
+- slide16_forest_loss.png
+- slide18_shadow_atlas.png
 
-## 차후 구현 계획
+다른 파일명을 사용하려면 `js/slides.js`의 해당 슬라이드 이미지 경로를 수정하세요.
 
-1. 보고서와 발표 구성안을 바탕으로 슬라이드 순서와 약 45분의 시간 배분을 확정합니다.
-2. 제공받은 지도 이미지를 `assets/maps/`에 배치하고 출처와 설명을 정리합니다.
-3. HTML 슬라이드, 화면 스타일, 탐색 기능을 구현합니다.
-4. 발표 흐름과 화면 표시를 점검합니다.
+## 수정
 
-## 확인 방법
+- 슬라이드 구성과 내용: `js/slides.js`
+- 디자인과 8px 간격 시스템: `css/presentation.css`
+- 탐색과 키보드 조작: `js/presentation.js`
 
-`index.html`을 브라우저에서 직접 열면 현재 안내 페이지를 확인할 수 있습니다. 별도 설치나 빌드 과정은 없습니다.
+## 원본 자료
+
+- 산업통상자원부(2024), 바이오매스 발전의 수입의존도 완화한다
+- Tierney 외(2024), Unheeded Warnings: Forest Biomass Threats to Tropical Forests in Indonesia and Southeast Asia
+- 포후와토 지방정부(2025), 랄라페항 1만 톤 목재펠릿 수출 보도
+- IPCC Task Force on National Greenhouse Gas Inventories, FAQ Q2-10
+- IEA 및 IEA Bioenergy, 산림 바이오매스 및 탄소중립 자료
+
+## 배포
+
+GitHub 저장소 `main` 브랜치의 `/ (root)`를 Pages 소스로 지정하면 됩니다. 공개 배포 범위는 저장소 설정에서 확인하세요.
