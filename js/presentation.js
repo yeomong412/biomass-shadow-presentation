@@ -36,12 +36,19 @@
   function go(index, initial = false) {
     const target = Math.max(0, Math.min(slides.length - 1, index));
     if (target === current && !initial) return;
+    const previousIndex = current;
+    slideMotion.settle();
     const old = deck.children[current];
     old.classList.remove('active');
     old.setAttribute('aria-hidden', 'true');
+    old.inert = true;
     current = target;
     deck.children[current].classList.add('active');
     deck.children[current].setAttribute('aria-hidden', 'false');
+    deck.children[current].inert = false;
+    if (!initial) {
+      slideMotion.play(old, deck.children[current], slides[previousIndex], slides[current], Math.sign(current - previousIndex));
+    }
     counter.textContent = `${String(current + 1).padStart(2, '0')} / ${slides.length}`;
     bar.style.width = `${(current + 1) / slides.length * 100}%`;
     previous.disabled = current === 0;
@@ -52,6 +59,7 @@
   }
 
   function toggleOverview(open) {
+    if (open) slideMotion.settle();
     overview.classList.toggle('open', open);
     if (open) overview.querySelector('.tile.selected')?.scrollIntoView({ block: 'nearest' });
   }
@@ -110,6 +118,7 @@
 
   function render() {
     deck.innerHTML = slides.map((slide, i) => slideView.markup(slide, i, slides.length)).join('');
+    [...deck.children].forEach(slide => { slide.inert = true; });
     slideView.loadFigures(deck);
     tiles.innerHTML = slides.map((slide, i) => `<button class="tile" data-to="${i}">
       <span>${String(i + 1).padStart(2, '0')} / ${slideView.escape(slide.chapter)}</span>${slideView.escape(slide.title)}
