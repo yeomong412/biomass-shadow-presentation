@@ -53,11 +53,11 @@
     for (const line of text.split(/\r?\n/)) {
       if (line.startsWith('## ')) {
         entry = null;
-        const heading = /^## (\d{1,2})\. .+? \| (\d{2}:\d{2})[–-](\d{2}:\d{2})\s*$/.exec(line);
+        const heading = /^## (\d{1,2})\. .+?(?: \| (\d{2}:\d{2})[–-](\d{2}:\d{2}))?\s*$/.exec(line);
         const index = heading ? Number(heading[1]) - 1 : -1;
         if (index < 0 || index >= slides.length) continue;
         if (bySlide.has(index)) return new Map();
-        entry = { time: `${heading[2]}–${heading[3]}`, lines: [] };
+        entry = { time: heading[2] ? `${heading[2]}–${heading[3]}` : '', lines: [] };
         bySlide.set(index, entry);
       } else if (entry && line.trim() !== '---') {
         entry.lines.push(line);
@@ -72,7 +72,7 @@
 
   function showNotes() {
     const entry = notes.get(current);
-    notesTime.textContent = entry ? `이 장 목표 구간 ${entry.time}` : '';
+    notesTime.textContent = entry?.time ? `이 장 목표 구간 ${entry.time}` : '';
     const text = entry?.text || (notes.size ?
       (current < 0 ? '청중 창에 연결되면 현재 장의 대본이 표시됩니다.' : '이 슬라이드에 해당하는 대본이 없습니다.') :
       '대본 파일을 선택해 주세요.');
@@ -115,7 +115,7 @@
       if (useNotes(text)) {
         stored('notes', text);
       } else {
-        noteError('장 번호와 시간이 있는 대본을 찾지 못했습니다. 이 발표자료의 45분 대본(.md)을 선택해 주세요.');
+        noteError('장 번호와 주제가 있는 대본을 찾지 못했습니다. speaker-notes.md를 선택해 주세요.');
       }
     } catch {
       if (load === notesLoad) noteError('대본 파일을 읽지 못했습니다. 파일을 다시 선택해 주세요.');
